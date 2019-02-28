@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     // one memory slot:
     int mem;
 
-    // interpret commands in argvp[]:
+    // interpret commands in argv[]:
     if (argc > 1) {
         for(int i = 1; i < argc; i++) {
             if(isdigit(argv[i][0]) || argv[i][0] == '-') {
