@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h> // malloc and free
 #include <limits.h> // for INT_MIN
+#include <ctype.h> // for isdigit
+#include <string.h> // string functions
+
 
 // a stack node:
 typedef struct node {
@@ -29,10 +32,47 @@ void error(char* msg);
 void printStack();
 
 int main(int argc, char* argv[]) {
-    push(1);
-    push(2);
-    push(3);
-    printStack();
+
+    // one memory slot:
+    int mem;
+
+    // interpret commands in argvp[]:
+    if (argc > 1) {
+        for(int i = 1; i < argc; i++) {
+            if(isdigit(argv[i][0]) || argv[i][0] == '-') {
+                push(atoi(argv[i]));
+            } else {
+                if(strcmp(".", argv[i]) == 0) {
+                    printStack();
+                } else if (strcmp("swap", argv[i]) == 0) {
+                    swap();
+                } else if (strcmp("add", argv[i]) == 0) {
+                    add();
+                } else if (strcmp("sub", argv[i]) == 0) {
+                    sub();
+                } else if (strcmp("mul", argv[i]) == 0) {
+                    mul();
+                } else if (strcmp("div", argv[i]) == 0) {
+                    divide();
+                } else if (strcmp("popmem", argv[i]) == 0) {
+                    mem = pop();
+                } else if (strcmp("pushmem", argv[i]) == 0) {
+                    push(mem);
+                } else if (strcmp("clear", argv[i]) == 0) {
+                    clear();
+                } else {
+                    printf("Unknown operation: %s\n", argv[i]);
+                }
+            }
+        }
+    } else {
+        printf("Usage: ./stack operationList\n");
+    }
+
+    // push(1);
+    // push(2);
+    // push(3);
+    // printStack();
     clear();
 }
 
